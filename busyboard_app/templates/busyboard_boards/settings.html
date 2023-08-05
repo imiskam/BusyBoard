@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<title>Profile Settings</title>
+<head>
+    <link rel="stylesheet" href="{% static 'busyboard_app/css/app.css' %}">
+</head>
+
+<div class="background image" id="background">
+        <style>
+            body {
+                background: url({% static 'busyboard_app/img/busyboard_background_board_secondary.jpg' %}) no-repeat center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
+    </div>
+
+<nav class="navbar navbar-light py-0 bg-dark">
+    <div class="navbar-brand">
+        <a href="{% url 'home' %}" style="text-decoration: none;"><h1 style="color: #fff"><img
+                src="{% static 'busyboard_app/img/busyboard.svg' %}" width="60" height="60"
+                class="d-inline-block align-top" alt=""><b>Busy</b>Board</h1></a>
+    </div>
+    <div class="d-flex align-items-center">
+
+        <div class="dropdown me-2">
+            <a href="#" class="text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}" width="50" height="50" class="rounded-circle me-2">
+                {% else %}
+                <img src="{% static 'busyboard_app/img/default_profile_photo.svg' %}" width="50" height="50"
+                     class="rounded-circle me-2" style="background-color:white">
+                {% endif %}
+                <b>
+                    {{ user.get_username }}
+                </b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li>
+                    <a class="dropdown-item" href="{% url 'sign_out' %}">
+                        <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor"
+                             class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"></path>
+                            <path fill-rule="evenodd"
+                                  d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"></path>
+                        </svg>
+                        Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="settings" style="text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <h3 style="color:#fff; margin-left: 60px">Settings</h3>
+    <div style="color:#fff; margin-left: 60px" data-bs-theme="dark">
+            <p><h5>Profile Photo:</h5><p>
+    {% if user.profile_photo %}
+   <img src="{{ user.profile_photo.url }}" alt="Profile Photo" height="20%" width="20%">
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="new_photo">
+    <p></p>
+    <button type="submit" class="btn btn-light" name="change_photo">Change Profile Photo</button>
+</form>
+
+<p></p>
+
+<form method="POST">
+    {% csrf_token %}
+   <button type="submit" class="btn btn-danger" name="delete_photo">Delete Profile Photo</button>
+</form>
+
+{% else %}
+<img src="{% static 'busyboard_app/img/default_profile_photo.svg' %}" alt="Profile Photo" height="20%" width="20%" style="background-color:white">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="new_photo">
+    <p></p>
+    <button type="submit" class="btn btn-light" name="change_photo">Change Profile Photo</button>
+</form>
+{% endif %}
+<hr>
+<p></p>
+
+<p><h5>Personal Data:</h5><p>
+<form method="POST">
+    {% csrf_token %}
+    <label for="first_name"><b>Name:</b></label><br>
+    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}"><br>
+    <label for="last_name"><b>Surname:</b></label><br>
+    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}"><br>
+    <label for="username"><b>Username:</b></label><br>
+    <input type="text" id="username" name="username" value="{{ user.username }}"><br>
+    <label for="email"><b>Email:</b></label><br>
+    <input type="email" id="email" name="email" value="{{ user.email }}"><br>
+    <p></p>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+<hr>
+<p></p>
+
+<p><h5>Change Password:</h5><p>
+<form method="POST">
+    {% csrf_token %}
+    {{ password_change_form.as_p }}
+    <button type="submit" class="btn btn-primary" name="change_password">Change password</button>
+</form>
+<hr>
+<p></p>
+
+<p><h5>Delete Account:</h5><p>
+        All your data will be lost in case of deleting the account!
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger" name="delete_account">Delete Account</button>
+</form>
+    </div>
+</div>
+<div><br><br><br><br></div>
+
+{% endblock %}

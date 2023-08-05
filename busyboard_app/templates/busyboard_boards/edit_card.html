@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<title>Edit Card</title>
+<head>
+    <link rel="stylesheet" href="{% static 'busyboard_app/css/app.css' %}">
+</head>
+<div class="background image" id="background">
+    <style>
+        body {
+            background: url({% static 'busyboard_app/img/busyboard_background_board_secondary.jpg' %}) no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+</div>
+
+<nav class="navbar navbar-light py-0 bg-dark">
+    <div class="navbar-brand">
+        <a href="{% url 'home' %}" style="text-decoration: none;"><h1 style="color: #fff"><img
+                src="{% static 'busyboard_app/img/busyboard.svg' %}" width="60" height="60"
+                class="d-inline-block align-top" alt=""><b>Busy</b>Board</h1></a>
+    </div>
+    <div class="d-flex align-items-center">
+
+        <div class="dropdown me-2">
+            <a href="#" class="text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}" width="50" height="50" class="rounded-circle me-2">
+                {% else %}
+                <img src="{% static 'busyboard_app/img/default_profile_photo.svg' %}" width="50" height="50"
+                     class="rounded-circle me-2" style="background-color:white">
+                {% endif %}
+                <b>
+                    {{ user.get_username }}
+                </b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li>
+                    <a class="dropdown-item" href="{% url 'settings' %}">
+                        <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                        </svg>
+                        Profile Settings</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'sign_out' %}">
+                        <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor"
+                             class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"></path>
+                            <path fill-rule="evenodd"
+                                  d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"></path>
+                        </svg>
+                        Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="edit-card" style="text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <div style="color:#fff; margin-left: 60px">
+        <h3>Edit Card - '{{ card.title }}'</h3>
+        <form method="POST" action="{% url 'save_card_changes' card.id %}" enctype="multipart/form-data"
+              data-bs-theme="dark">
+            {% csrf_token %}
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" value="{{ card.title }}"><br>
+
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description">{{ card.description }}</textarea><br>
+
+            <label for="priority">Priority: {{ card.priority }}</label><br>
+            <select id="priority" name="priority">
+                <option value="{{ card.priority }}">-- Select --</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select><br><br>
+
+            <label>Current Attachment:</label>
+            {% if card.attachment %}
+            <a href="{{ card.attachment.url }}">{{ card.attachment.name }}</a>
+            <button type="submit" class="btn btn-danger" name="delete_attachment">Delete Attachment</button>
+            {% else %}
+            <i style="color: red">No attachment</i>
+            {% endif %}
+            <br><br>
+            <label>New Attachment:</label>
+            <input type="file" name="new_attachment">
+            <button type="submit" class="btn btn-light" name="change_attachment">Change Attachment</button>
+            <br><br><br>
+
+            <input type="submit" class="btn btn-primary" value="Save Changes">
+        </form>
+
+    </div>
+</div>
+
+
+<script>
+const titleInput = document.getElementById('title');
+titleInput.addEventListener('click', () => {
+  startSpeechRecognition(titleInput);
+});
+
+const descriptionInput = document.getElementById('description');
+descriptionInput.addEventListener('click', () => {
+  startSpeechRecognition(descriptionInput);
+});
+
+function startSpeechRecognition(inputElement) {
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = 'en-US';
+
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    const speechResult = event.results[0][0].transcript;
+    inputElement.value = speechResult;
+  };
+
+  recognition.onend = function() {
+    recognition.stop();
+  };
+}
+</script>
+{% endblock %}

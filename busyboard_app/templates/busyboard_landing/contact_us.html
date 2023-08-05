@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<title>Contact Us</title>
+<head>
+    <link rel="stylesheet" href="{% static 'busyboard_landing/css/index.css' %}">
+    <div class="background image" id="background">
+        <style>
+            body {
+                background: url({% static 'busyboard_landing/img/busyboard_background.jpg' %}) no-repeat center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
+    </div>
+</head>
+
+<nav class="navbar navbar-light py-0 bg-dark">
+    <div class="navbar-brand" height="90">
+        <a href="{% url 'home' %}" style="text-decoration: none;"><h1 style="color: #fff"><img src="{% static 'busyboard_landing/img/busyboard.svg' %}" width="60" height="60"
+                                     class="d-inline-block align-top" alt=""><b>Busy</b>Board</h1></a>
+    </div>
+
+    <a href="{% url 'sign_up' %}" class="sign-up-btn"><b>Sign Up</b></a>
+    {% if request.session.session_key %}
+    <a href="{% url 'my_boards' %}" class="open-app-btn"><b>Open App</b></a>
+    {% else %}
+    <a href="{% url 'sign_in' %}" class="open-app-btn"><b>Sign In</b></a>
+    {% endif %}
+</nav>
+<br>
+<div class="contactus-description" style="margin-right: 45%; text-shadow: #007bff 1px 0 10px; opacity: 0.75;">
+    <h3 style="color:#fff; margin-left: 60px">Contact Us</h3>
+    <br>
+    <h6 style="color:#fff; margin-left: 60px">
+        <p>
+            Do you have feedback, want to report a bug, or have a question about our product? Please feel free to
+            contact us
+            using
+            the form below. We strive to respond to all inquiries within 1 business day.
+        </p>
+
+        <p>
+            Whether you're a customer looking for support, a developer interested in collaborating, or a journalist
+            seeking a
+            comment, we want to hear from you. Tell us how we can help and a member of our team will be in touch
+            shortly.
+        </p>
+    </h6>
+</div>
+
+<form action="{% url 'contact_us' %}" method="post" data-bs-theme="dark" style="color:#fff; margin-left: 60px">
+    {% csrf_token %}
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="phone">Phone:</label><br>
+    <input type="tel" id="phone" name="phone" required><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+    {{ form.captcha }}<br><br>
+    <input type="submit" class="btn btn-primary" value="Send Request">
+</form>
+{% if form.errors %}
+<ul>
+    {% for field in form %}
+    {% for error in field.errors %}
+    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+    {% endfor %}
+    {% endfor %}
+</ul>
+{% endif %}
+
+<script>
+const messageInput = document.getElementById('message');
+messageInput.addEventListener('click', () => {
+  startSpeechRecognition(messageInput);
+});
+
+function startSpeechRecognition(inputElement) {
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = 'en-US';
+
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    const speechResult = event.results[0][0].transcript;
+    inputElement.value = speechResult;
+  };
+
+  recognition.onend = function() {
+    recognition.stop();
+  };
+}
+</script>
+{% endblock %}

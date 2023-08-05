@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<title>My Boards</title>
+<head>
+    <link rel="stylesheet" href="{% static 'busyboard_app/css/app.css' %}">
+</head>
+
+<div class="background image" id="background">
+    <style>
+        body {
+            background: url({% static 'busyboard_app/img/busyboard_background_board_secondary.jpg' %}) no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+</div>
+
+<nav class="navbar navbar-light py-0 bg-dark">
+    <div class="navbar-brand">
+        <a href="{% url 'home' %}" style="text-decoration: none;"><h1 style="color: #fff"><img
+                src="{% static 'busyboard_app/img/busyboard.svg' %}" width="60" height="60"
+                class="d-inline-block align-top" alt=""><b>Busy</b>Board</h1></a>
+    </div>
+    <div class="d-flex align-items-center">
+
+        <div class="dropdown me-2">
+            <a href="#" class="text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}" width="50" height="50" class="rounded-circle me-2">
+                {% else %}
+                <img src="{% static 'busyboard_app/img/default_profile_photo.svg' %}" width="50" height="50"
+                     class="rounded-circle me-2" style="background-color:white">
+                {% endif %}
+                <b>
+                    {{ user.get_username }}
+                </b>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li>
+                    <a class="dropdown-item" href="{% url 'settings' %}">
+                        <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+                            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+                        </svg>
+                        Profile Settings
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'sign_out' %}">
+                        <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor"
+                             class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"></path>
+                            <path fill-rule="evenodd"
+                                  d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"></path>
+                        </svg>
+                        Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+
+<div class="my-boards" style="margin-right: 45%; text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <h3 style="color:#fff; margin-left: 60px">My Boards</h3>
+    <br>
+</div>
+<div class="row" style="color:#fff; margin-left: 5%; margin-right: 5%;">
+    {% if owned_boards %}
+    {% for board in owned_boards %}
+    <div class="col-md-4" style="margin-bottom: 20px">
+        <div class="card mb-2 board-card" style="background-color: {{ board.color }}">
+            <style>
+                .board-card {
+                    transition: background-color 0.3s ease;
+                }
+                .board-card:hover {
+                    background-color: #c7c7c7;
+                    box-shadow: 0px 0px 15px #c7c7c7;
+                }
+            </style>
+            <div data-link="{% url 'board_details' board.slug %}" style="color:#fff; text-decoration: none;"
+                 onclick="window.location.href = this.getAttribute('data-link');">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 align="center">{{ board.title }}</h3>
+                        <div style="display: flex; align-items: center;">
+                            <form method="POST" action="{% url 'edit_board' board.id %}"
+                                  onclick="event.stopPropagation();">
+                                {% csrf_token %}
+                                <button title="Edit Board" type="submit" class="btn btn-outline-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                            <form method="POST" action="{% url 'export_board_to_json' board.id %}"
+                                  onclick="event.stopPropagation();">
+                                {% csrf_token %}
+                                <button title="Export Data" type="submit" class="btn btn-outline-secondary"
+                                        style="margin-left: 5px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                                        <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                            {% if request.user == board.owner and board.users.count < 10 %}
+                            <a href="{% url 'invite_to_board' board.slug %}"
+                               style="margin-left: 5px;">
+                                <button title="Invite Users" class="btn btn-outline-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-person-plus" viewBox="0 0 16 16">
+                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
+                                        <path fill-rule="evenodd"
+                                              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"></path>
+                                    </svg>
+                                </button>
+                            </a>
+                            {% endif %}
+                            <form method="POST" action="{% url 'delete_board' board.id %}"
+                                  onclick="event.stopPropagation();">
+                                {% csrf_token %}
+                                <button title="Delete Board" type="submit" class="btn btn-outline-danger"
+                                        style="margin-left: 5px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+                    <p>{{ board.description }}</p>
+                    {% if board.invited_users.exists %}
+                    <b>Invited users:</b>
+                    {% for user in board.invited_users.all %}
+                    <li style="display: flex; align-items: center;">
+                        <form method="POST"
+                              action="{% url 'remove_user_from_board' board.slug %}"
+                              onclick="event.stopPropagation();">
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{ user.username }}">
+                            <button title="Remove User" type="submit" class="btn btn-link px-1 py-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                                     class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                                </svg>
+                            </button>
+                        </form>
+                        {{ user.username }}
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="text-shadow: #007bff 1px 0 10px; opacity: 0.85;">No boards here yet. Create a new board to
+        get started.</p>
+    {% endif %}
+</div>
+<br>
+<hr style="color:#fff; margin-left: 60px">
+<br>
+{% if user.board_set.count < 6 %}
+<div class="my-boards" style="text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <h3 style="color:#fff; margin-left: 60px">Add New Board</h3>
+    <br>
+    <div style="color:#fff; margin-left: 60px">
+        <form method="POST" action="{% url 'create_board' %}" data-bs-theme="dark">
+            {% csrf_token %}
+            <label for="title">Board Name:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="description">Board Description:</label><br>
+            <input type="text" id="description" name="description"><br>
+            <p></p>
+            <input type="submit" class="btn btn-primary" value="Create Board">
+        </form>
+        {% else %}
+        <p style="color:#fff; margin-left: 60px; text-shadow: #007bff 1px 0 10px; opacity: 0.85;">You have reached the
+            maximum limit of boards.<br>
+            Delete a board to create a new one.</p>
+        {% endif %}
+    </div>
+</div>
+<br>
+<hr style="color:#fff; margin-left: 60px">
+<br>
+
+<div class="my-boards" style="margin-right: 45%; text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <div style="color:#fff; margin-left: 60px">
+        {% if invited_boards %}
+        <h3>Boards I'm Invited To</h3>
+    </div>
+    <br>
+</div>
+<div class="row" style="color:#fff; margin-left: 5%; margin-right: 5%">
+    {% for board in invited_boards %}
+    <div class="col-md-4">
+        <div class="card mb-2 board-card" style="background-color: {{ board.color }};">
+            <style>
+                .board-card {
+                    transition: background-color 0.3s ease;
+                }
+                .board-card:hover {
+                    background-color: #c7c7c7;
+                    box-shadow: 0px 0px 15px #c7c7c7;
+                }
+            </style>
+            <div data-link="{% url 'board_details' board.slug %}" style="color: inherit; text-decoration: none;"
+                 onclick="window.location.href = this.getAttribute('data-link');">
+                <div class="card-body" >
+                    <div class="d-flex justify-content-between">
+                        <h3 align="center" style="color:#fff;">{{ board.title }}</h3>
+                        <div style="display: flex; align-items: center;">
+                            {% if request.user in board.invited_users.all %}
+                            <form method="POST" action="{% url 'leave_board' board.slug %}">
+                                {% csrf_token %}
+                                <button title="Leave Board" type="sumbit" class="btn btn-outline-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"></path>
+                                        <path fill-rule="evenodd"
+                                              d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <p style="color:#fff;">{{ board.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="color:#fff; text-shadow: #007bff 1px 0 10px; opacity: 0.85;">You are not invited to any board yet.<br>
+        Please contact the target board owner to get access.</p>
+</div>
+{% endif %}
+<div><br><br><br><br></div>
+
+<script>
+const titleInput = document.getElementById('title');
+titleInput.addEventListener('click', () => {
+  startSpeechRecognition(titleInput);
+});
+
+const descriptionInput = document.getElementById('description');
+descriptionInput.addEventListener('click', () => {
+  startSpeechRecognition(descriptionInput);
+});
+
+function startSpeechRecognition(inputElement) {
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = 'en-US';
+
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    const speechResult = event.results[0][0].transcript;
+    inputElement.value = speechResult;
+  };
+
+  recognition.onend = function() {
+    recognition.stop();
+  };
+}
+</script>
+{% endblock %}

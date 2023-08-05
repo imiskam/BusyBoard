@@ -1,0 +1,58 @@
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #344966;
+    border-radius: 10px;
+}
+
+.navbar {
+    padding-left: 50px;
+    padding-right: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.contact-us-btn {
+  margin-right: 300px;
+  color: white;
+  text-decoration: none;
+}
+
+.open-app-btn {
+  position: fixed;
+  right: 60px;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  margin: 10px
+}
+
+.open-app-btn:hover {
+  background-color: #0056b3;
+}
+
+.sign-up-btn {
+  position: fixed;
+  right: 180px;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  margin: 10px
+}
+
+.sign-up-btn:hover {
+  background-color: #0056b3;
+}

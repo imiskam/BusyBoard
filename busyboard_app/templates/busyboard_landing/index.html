@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<title>BusyBoard</title>
+<head>
+    <link rel="stylesheet" href="{% static 'busyboard_landing/css/index.css' %}">
+    <div class="background image" id="background">
+        <style>
+        body {
+            background: url({% static 'busyboard_landing/img/busyboard_background.jpg' %}) no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            opacity: 0.9;
+        }
+        </style>
+    </div>
+</head>
+<body>
+<nav class="navbar navbar-light py-0 bg-dark">
+    <div class="navbar-brand" height="90">
+        <h1 style="color: #fff"><img src="{% static 'busyboard_landing/img/busyboard.svg' %}" width="60" height="60"
+                                     class="d-inline-block align-top" alt=""><b>Busy</b>Board</h1>
+    </div>
+    <a href="{% url 'contact_us' %}" class="contact-us-btn"><b>Contact Us</b></a>
+    <a href="{% url 'sign_up' %}" class="sign-up-btn"><b>Sign Up</b></a>
+    {% if request.session.session_key %}
+    <a href="{% url 'my_boards' %}" class="open-app-btn"><b>Open App</b></a>
+    {% else %}
+    <a href="{% url 'sign_in' %}" class="open-app-btn"><b>Sign In</b></a>
+    {% endif %}
+</nav>
+<br>
+<div class="app-description" style="margin-right: 45%; text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <h6 style="color:#fff; margin-left: 60px">
+        <br><br><br>
+        <p>Welcome to <b>Busy</b>Board, the intuitive and user-friendly Kanban board website designed to streamline your
+            project
+            management experience. Our platform helps you visualize your workflow, organize tasks, and collaborate with
+            your
+            team in real-time, making it easier than ever to stay on top of your projects and achieve your goals.
+            Whether you're a freelancer managing multiple projects, a small business owner looking to improve team
+            productivity,
+            or a large organization seeking a more efficient way to track progress, BusyBoard has you covered. Our
+            easy-to-use interface allows you to create customizable boards, add tasks, and move them through various
+            stages
+            as
+            they progress from inception to completion.</p>
+        <p>With <b>Busy</b>Board, you can:</p>
+        <ul>
+            <li>Create and manage up to 6 boards for different projects or teams;</li>
+            <li>Collaborate with up to 10 team members in real-time;</li>
+            <li>Add, edit and prioritize tasks with a simple drag-and-drop interface;</li>
+            <li>Add, edit information about boards and tasks via voice input;</li>
+            <li>Access your boards from any device, anywhere, at any time.</li>
+        </ul>
+        <p>Get started with <b>Busy</b>Board today and discover how our platform can revolutionize the way you manage
+            your projects and collaborate with your team. Sign up for a free account and experience the power of
+            efficient, organized,
+            and seamless project management.</p>
+
+        <img src="{% static 'busyboard_landing/img/busyboard.svg' %}" width="128" height="128" alt="big-logo">
+    </h6>
+</div>
+</body>
+{% endblock %}

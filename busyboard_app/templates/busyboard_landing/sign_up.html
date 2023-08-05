@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<title>Sign Up</title>
+<div class="background image" id="background">
+        <style>
+            body {
+                background: url({% static 'busyboard_landing/img/busyboard_background.jpg' %}) no-repeat center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
+    </div>
+<nav class="navbar navbar-light py-0 bg-dark">
+    <div class="navbar-brand" height="60">
+        <a href="{% url 'home' %}" style="text-decoration: none;"><h1 style="color: #fff"><img
+                src="{% static 'busyboard_app/img/busyboard.svg' %}" width="60" height="60"
+                class="d-inline-block align-top" alt=""><b>Busy</b>Board</h1></a>
+    </div>
+</nav>
+<br>
+<div class="sign-up" style="margin-right: 45%; text-shadow: #007bff 1px 0 10px; opacity: 0.85;">
+    <h3 style="color:#fff; margin-left: 60px">Sign Up</h3>
+</div>
+<br>
+<form method="POST" enctype="multipart/form-data" data-bs-theme="dark" style="color:#fff; margin-left: 60px">
+    {% csrf_token %}
+    <label for="first_name">Name:</label><br>
+    <input type="text" id="first_name" name="first_name"><br>
+    <label for="last_name">Surname:</label><br>
+    <input type="text" id="last_name" name="last_name"><br>
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" required><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+    <label for="password1">Password:</label><br>
+    <input type="password" id="password1" name="password1" required><br>
+    <label for="password2">Confirm Password:</label><br>
+    <input type="password" id="password2" name="password2" required><br>
+    <label for="profile_photo">Profile Photo:</label><br>
+    <input type="file" id="profile_photo" name="profile_photo"><br><br>
+    {{ form.captcha }}
+    <br>
+    <p></p>
+    <input type="submit" class="btn btn-primary" value="Sign up">
+</form>
+{% if form.errors %}
+<ul>
+    {% for field in form %}
+    {% for error in field.errors %}
+    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+    {% endfor %}
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

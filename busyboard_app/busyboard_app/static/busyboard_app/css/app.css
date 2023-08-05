@@ -1,0 +1,103 @@
+.navbar {
+    padding-left: 50px;
+    padding-right: 50px;
+    position: sticky;
+    top: 0;
+}
+
+.form-inline {
+    padding-right: 60px;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    float: left;
+    --bs-gutter-x: 0rem;
+}
+
+.kanban-board {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 1%;
+    width: 100%;
+}
+
+.kanban-column{
+    border: 1px solid #c7c7c7;
+    border-bottom-style: none;
+    justify-content: center;
+    flex: 1;
+    margin: 0 10px;
+    margin-bottom: 0%;
+    min-height: 300px;
+    max-height: auto;
+    text-overflow: ellipsis
+}
+
+.kanban-cards {
+    min-height: 85%;
+    max-height: 85%;
+    overflow-y: auto;
+}
+
+.card {
+    transition: box-shadow 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #6D7474;
+    border-radius: 10px;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 20px #c7c7c7;
+}
+
+.btn-primary {
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #344966;
+    border-radius: 10px;
+}
+
+.kanban-cards::-webkit-scrollbar {
+    width: 5px;
+}
+.kanban-cards::-webkit-scrollbar-thumb {
+    background-color: #c7c7c7;
+    border-radius: 5px;
+}
+
+.modal {
+    --bs-modal-width: 600px;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: #344966;
+    border-radius: 10px;
+}
+
+.form-select {
+    border-radius: 10px;
+}
